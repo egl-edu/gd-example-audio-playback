@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="gd-example-audio-playback"
-run/main_scene="uid://qk4mcfocrdd4"
+run/main_scene="uid://quv14hy68ymd"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[dotnet]
+
+project/assembly_name="gd-example-audio-playback"
 
 [rendering]
 

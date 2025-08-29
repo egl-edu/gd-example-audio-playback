@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://quv14hy68ymd"]
+
+[ext_resource type="AudioStream" uid="uid://b81itvbkbmfgw" path="res://assets/audio/jingles_SAX00.ogg" id="1_n16f7"]
+[ext_resource type="Script" uid="uid://dravyhochinpx" path="res://source_son_bouton.gd" id="2_45eks"]
+[ext_resource type="AudioStream" uid="uid://cgp56qd6bajil" path="res://assets/audio/jingles_HIT04.ogg" id="3_ch8xu"]
+
+[node name="DeclencherSon" type="Node2D"]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_n16f7")
+script = ExtResource("2_45eks")
+
+[node name="Button" type="Button" parent="."]
+offset_left = 50.0
+offset_top = 45.0
+offset_right = 261.0
+offset_bottom = 76.0
+text = "Jouer son"
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_ch8xu")
+script = ExtResource("2_45eks")
+
+[connection signal="button_down" from="Button" to="AudioStreamPlayer" method="_on_button_down"]
+[connection signal="button_up" from="Button" to="AudioStreamPlayer2" method="_on_button_up"]
