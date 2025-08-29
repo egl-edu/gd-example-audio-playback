@@ -53,3 +53,30 @@ func _on_toggled(toggled_on: bool) -> void:
 		$AudioStreamPlayer.stop()
 
 ```
+
+## Diagramme d'états
+
+Le diagramme ci-dessous illustre le comportement attendu des boutons : un bouton de type "déclenchement" (trigger) lance une lecture ponctuelle qui revient à l'état 'au repos' à la fin, tandis que le bouton de type "interrupteur" (toggle) active/désactive une lecture en boucle.
+
+```mermaid
+stateDiagram-v2
+    [*] --> AuRepos
+    AuRepos : État initial
+
+    %% Déclenchement (trigger)
+    AuRepos --> LecturePonctuelle : Appui (Trigger)
+    LecturePonctuelle --> AuRepos : Lecture terminée
+
+    %% Interrupteur (toggle)
+    AuRepos --> LectureBoucle : Basculer ON (Toggle)
+    LectureBoucle --> AuRepos : Basculer OFF (Toggle)
+    LectureBoucle --> LectureBoucle : Boucle (si import en boucle)
+
+    %% Erreurs / cas manquants
+    AuRepos --> ErreurAudioManquante : Ressource introuvable
+    ErreurAudioManquante --> AuRepos : Corriger la ressource
+```
+
+*Notes* :
+- "LecturePonctuelle" correspond à l'appel `play()` sur un `AudioStreamPlayer` pour une lecture unique.
+- "LectureBoucle" suppose que l'audio est importé en mode boucle ou que la propriété loop est activée.
