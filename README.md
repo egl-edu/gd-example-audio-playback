@@ -9,12 +9,24 @@ Le bouton du haut déclenche un son le temps d'une lecture, le bouton du bas act
 
 ![Noeuds](./img/scene-arbre-de-noeud.png)
 
-## Paramètre d'importation sonore
+
+# gd-example-audio-playback
+
+![Projet de déclenchement sonore](image.png)
+
+Ce projet Godot montre deux manières de faire jouer des sons.
+
+Le bouton du haut déclenche un son pour la durée d'une lecture ; le bouton du bas active une boucle qui joue tant que le bouton reste activé.
 
 
-Du chutier principal (file system), sélectionner le ficher sonore et personnaliser le paramètre d'importation pour déterminer si ce dernier joue en boucle lorsqu'il est déclenché. Par default, il joue une fois sans boucler. 
+![Nœuds](./img/scene-arbre-de-noeud.png)
 
-| Déclenchement | Interupteur (Boucle) | 
+## Paramètres d'importation sonore
+
+
+Depuis l'explorateur de fichiers (file system), sélectionnez le fichier audio et personnalisez les paramètres d'importation pour déterminer si celui‑ci doit être lu en boucle lorsqu'il est déclenché. Par défaut, il est lu une seule fois (sans boucle).
+
+| Déclenchement | Interrupteur (Boucle) | 
 |---|---|
 |![déclenchement](./img/importation_audio_déclenchement.png) | ![lecture en boucle](./img/importation_audio_boucle.png) |
 
@@ -24,39 +36,36 @@ Du chutier principal (file system), sélectionner le ficher sonore et personnali
 
 ### Déclenchement (trigger)
 
-Par défault, le bouton se comporte de type déclenchement, pas de personnalisation nécessaire
+Par défaut, le bouton se comporte comme un déclencheur : aucune personnalisation n'est nécessaire.
 
-Attacher l'action `play()` du noeud audioStreamPlayer au signal `_on_pressed()`
+Attachez l'appel `play()` du nœud `AudioStreamPlayer` au signal `_on_pressed()` :
 
 ```gdscript
 func _on_pressed() -> void:
 	$AudioStreamPlayer.play()
 ```
 
-### Interupteur (toggle)
+### Interrupteur (toggle)
 
-Il faut personnaliser le bouton régulier afin qu'il se comporte de type interupteur
+Pour obtenir un comportement d'interrupteur, activez le mode bascule du bouton (toggle_mode) afin qu'il conserve son état.
 
 ![bouton-declenchement.png](./img/bouton-declenchement.png)
 
-
-Attacher l'action `play()` du noeud audioStreamPlayer au signal `_on_toggled(toggled_on: bool)`
-
-Utiliser le booléen `toggled_on` pour déterminer l'état de lecture du fichier sonore
-
+Attachez l'appel `play()` / `stop()` du nœud `AudioStreamPlayer` au signal `_on_toggled(toggled_on: bool)` :
 
 ```gdscript
 func _on_toggled(toggled_on: bool) -> void:
-	if toggled_on == true:
+	if toggled_on:
 		$AudioStreamPlayer.play()
 	else:
 		$AudioStreamPlayer.stop()
-
 ```
+
+Utilisez le booléen `toggled_on` pour déterminer l'état de lecture du fichier audio.
 
 ## Diagramme d'états
 
-Le diagramme ci-dessous illustre le comportement attendu des boutons : un bouton de type "déclenchement" (trigger) lance une lecture ponctuelle qui revient à l'état 'au repos' à la fin, tandis que le bouton de type "interrupteur" (toggle) active/désactive une lecture en boucle.
+Le diagramme ci‑dessous illustre le comportement attendu des boutons : un bouton de type « déclenchement » (trigger) lance une lecture ponctuelle qui revient à l'état « au repos » à la fin, tandis que le bouton de type « interrupteur » (toggle) active/désactive une lecture en boucle.
 
 ```mermaid
 stateDiagram-v2
@@ -78,5 +87,7 @@ stateDiagram-v2
 ```
 
 *Notes* :
-- "LecturePonctuelle" correspond à l'appel `play()` sur un `AudioStreamPlayer` pour une lecture unique.
-- "LectureBoucle" suppose que l'audio est importé en mode boucle ou que la propriété loop est activée.
+- « LecturePonctuelle » correspond à l'appel `play()` sur un `AudioStreamPlayer` pour une lecture unique.
+- « LectureBoucle » suppose que l'audio est importé en mode boucle ou que la propriété `loop` est activée.
+
+
