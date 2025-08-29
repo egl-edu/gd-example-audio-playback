@@ -1,0 +1,56 @@
+[gd_scene load_steps=5 format=3 uid="uid://qk4mcfocrdd4"]
+
+[ext_resource type="Script" uid="uid://idudglpu7i77" path="res://scripts/button_trigger.gd" id="1_1bvp3"]
+[ext_resource type="AudioStream" uid="uid://bv5t6mg1mexyg" path="res://assets/audio/1_bar_120bpm_surge-dreamssurge-dreams.wav" id="2_lquwl"]
+[ext_resource type="Script" uid="uid://bsckq4nirkm4u" path="res://scripts/button_toggle.gd" id="3_7mycd"]
+[ext_resource type="AudioStream" uid="uid://bkiiymamfnn8k" path="res://assets/audio/1_bar_120bpm_ripplerx-malletripplerx-mallet.wav" id="4_272bh"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button_déclenchement_trigger" type="Button" parent="."]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_right = 100.0
+offset_bottom = 8.0
+grow_horizontal = 2
+text = "Déclenchement
+(Trigguer)
+"
+script = ExtResource("1_1bvp3")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Button_déclenchement_trigger"]
+stream = ExtResource("2_lquwl")
+
+[node name="Button_interrupteur_toggle" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -200.0
+offset_right = 100.0
+grow_horizontal = 2
+grow_vertical = 0
+toggle_mode = true
+text = "interrupteur
+(Toggle)
+"
+script = ExtResource("3_7mycd")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Button_interrupteur_toggle"]
+stream = ExtResource("4_272bh")
+
+[connection signal="pressed" from="Button_déclenchement_trigger" to="Button_déclenchement_trigger" method="_on_pressed"]
+[connection signal="toggled" from="Button_interrupteur_toggle" to="Button_interrupteur_toggle" method="_on_toggled"]
